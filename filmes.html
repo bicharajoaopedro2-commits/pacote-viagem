@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CineFavoritos | Meu Cinema</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #0b0d12;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* CABEÇALHO */
+        header {
+            background: #11141c;
+            padding: 25px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #292d38;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #f5bd4f;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        header p {
+            color: #a5a8b1;
+            font-size: 14px;
+        }
+
+        /* DESTAQUE */
+        .banner {
+            padding: 65px 20px;
+            text-align: center;
+            background:
+                linear-gradient(135deg, #171b28, #25202a, #10131b);
+            border-bottom: 1px solid #292d38;
+        }
+
+        .banner h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .banner h1 span {
+            color: #f5bd4f;
+        }
+
+        .banner p {
+            color: #b5b7c0;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .destaque {
+            display: inline-block;
+            margin-top: 22px;
+            padding: 9px 18px;
+            border: 1px solid #a77d32;
+            border-radius: 30px;
+            color: #f5bd4f;
+            font-size: 13px;
+        }
+
+        /* CONTEÚDO PRINCIPAL */
+        main {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 25px;
+        }
+
+        .titulo-secao {
+            margin-bottom: 25px;
+        }
+
+        .titulo-secao h2 {
+            font-size: 27px;
+            margin-bottom: 10px;
+        }
+
+        .titulo-secao p {
+            color: #969aa6;
+            line-height: 1.6;
+        }
+
+        /* FORMULÁRIO */
+        .formulario {
+            background: #151923;
+            border: 1px solid #292f3d;
+            border-radius: 15px;
+            padding: 35px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+        }
+
+        .formulario h3 {
+            font-size: 21px;
+            margin-bottom: 10px;
+        }
+
+        .descricao {
+            color: #969aa6;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .campo {
+            margin-bottom: 24px;
+        }
+
+        .campo label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .campo input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #353b49;
+            background: #0e121a;
+            color: white;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .campo input:focus {
+            border-color: #f5bd4f;
+            box-shadow: 0 0 0 3px rgba(245,189,79,0.10);
+        }
+
+        .campo input::placeholder {
+            color: #747987;
+        }
+
+        .campo small {
+            display: block;
+            margin-top: 8px;
+            color: #858b99;
+        }
+
+        /* BOTÕES */
+        .botoes {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-cadastrar {
+            background: #f5bd4f;
+            color: #171717;
+            border: none;
+        }
+
+        .btn-cadastrar:hover {
+            background: #ffd477;
+            transform: translateY(-2px);
+        }
+
+        .btn-limpar {
+            background: transparent;
+            color: #ffffff;
+            border: 1px solid #454b59;
+        }
+
+        .btn-limpar:hover {
+            background: #272d3a;
+        }
+
+        /* RESULTADO */
+        #resultado {
+            display: none;
+            margin-top: 35px;
+            padding: 25px;
+            background: #101923;
+            border: 1px solid #3a4655;
+            border-radius: 12px;
+        }
+
+        #resultado h3 {
+            color: #f5bd4f;
+            font-size: 21px;
+            margin-bottom: 20px;
+        }
+
+        .informacao {
+            padding: 12px 0;
+            border-bottom: 1px solid #29313d;
+            color: #d6d9e0;
+        }
+
+        .informacao strong {
+            color: white;
+        }
+
+        .mensagem-final {
+            margin-top: 20px;
+            padding: 15px;
+            background: #202a32;
+            border-radius: 8px;
+            color: #f5bd4f;
+            font-weight: bold;
+        }
+
+        /* RODAPÉ */
+        footer {
+            background: #11141c;
+            border-top: 1px solid #292d38;
+            text-align: center;
+            padding: 30px 15px;
+            color: #858b99;
+            font-size: 13px;
+            margin-top: 70px;
+        }
+
+        footer span {
+            color: #f5bd4f;
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 600px) {
+
+            header {
+                padding: 20px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .banner {
+                padding: 45px 20px;
+            }
+
+            .banner h1 {
+                font-size: 30px;
+            }
+
+            main {
+                margin: 35px auto;
+                padding: 0 15px;
+            }
+
+            .formulario {
+                padding: 22px;
+            }
+
+            .botoes {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- CABEÇALHO -->
+    <header>
+        <div class="logo">🎬 Cine<span>Favoritos</span></div>
+
+        <p>Seu espaço para filmes favoritos</p>
+    </header>
+
+    <!-- BANNER -->
+    <section class="banner">
+
+        <h1>Seu cinema. <span>Suas escolhas.</span></h1>
+
+        <p>
+            Cadastre seus filmes favoritos, registre suas avaliações
+            e descubra quais produções merecem sua recomendação.
+        </p>
+
+        <div class="destaque">
+            ⭐ SUA COLEÇÃO DE FILMES
+        </div>
+
+    </section>
+
+    <!-- CONTEÚDO -->
+    <main>
+
+        <div class="titulo-secao">
+
+            <h2>Cadastro de Filme Favorito</h2>
+
+            <p>
+                Preencha as informações abaixo para registrar
+                um filme na sua coleção pessoal.
+            </p>
+
+        </div>
+
+        <!-- FORMULÁRIO -->
+        <section class="formulario">
+
+            <h3>📽️ Informações do filme</h3>
+
+            <p class="descricao">
+                Informe os dados da produção cinematográfica.
+            </p>
+
+            <form id="form-filme">
+
+                <div class="campo">
+
+                    <label for="filme">Nome do filme</label>
+
+                    <input
+                        type="text"
+                        id="filme"
+                        placeholder="Ex: Interestelar"
+                        required
+                    >
+
+                    <small>Digite o título do seu filme favorito.</small>
+
+                </div>
+
+                <div class="campo">
+
+                    <label for="ano">Ano de lançamento</label>
+
+                    <input
+                        type="number"
+                        id="ano"
+                        placeholder="Ex: 2014"
+                        min="1888"
+                        required
+                    >
+
+                    <small>Informe o ano em que o filme foi lançado.</small>
+
+                </div>
+
+                <div class="campo">
+
+                    <label for="nota">Sua avaliação (1 a 10)</label>
+
+                    <input
+                        type="number"
+                        id="nota"
+                        placeholder="Ex: 10"
+                        min="1"
+                        max="10"
+                        step="1"
+                        required
+                    >
+
+                    <small>Dê uma nota de 1 até 10 para o filme.</small>
+
+                </div>
+
+                <div class="botoes">
+
+                    <button type="submit" class="btn-cadastrar">
+                        Cadastrar filme →
+                    </button>
+
+                    <button type="reset" class="btn-limpar">
+                        Limpar campos
+                    </button>
+
+                </div>
+
+            </form>
+
+            <!-- RESULTADO -->
+            <div id="resultado" aria-live="polite"></div>
+
+        </section>
+
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer>
+
+        <p>
+            © 2026 <span>CineFavoritos</span> |
+            Desenvolvido com HTML, CSS e JavaScript.
+        </p>
+
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+
+        const formulario = document.getElementById("form-filme");
+
+        formulario.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            let filme = document.getElementById("filme").value.trim();
+
+            let ano = Number(document.getElementById("ano").value);
+
+            let nota = Number(document.getElementById("nota").value);
+
+            let anoAtual = new Date().getFullYear();
+
+            let resultado = document.getElementById("resultado");
+
+            // VALIDAÇÃO DOS CAMPOS
+
+            if (
+                filme === "" ||
+                !Number.isInteger(ano) ||
+                ano < 1888 ||
+                ano > anoAtual ||
+                !Number.isInteger(nota) ||
+                nota < 1 ||
+                nota > 10
+            ) {
+
+                alert("Verifique os dados informados e tente novamente!");
+
+                return;
+
+            }
+
+            // CALCULAR IDADE DO FILME
+
+            let idade = anoAtual - ano;
+
+            // MENSAGENS DOS DESAFIOS
+
+            let mensagem = "";
+
+            if (nota >= 8) {
+
+                mensagem = "✅ Filme muito recomendado!";
+
+            } else if (nota < 5) {
+
+                mensagem = "⚠️ Talvez você não tenha gostado muito desse filme.";
+
+            } else {
+
+                mensagem = "⭐ Uma avaliação intermediária!";
+
+            }
+
+            // EXIBIR RESULTADO
+
+            resultado.style.display = "block";
+
+            resultado.innerHTML = `
+
+                <h3>🎬 Filme cadastrado com sucesso!</h3>
+
+                <div class="informacao">
+                    <strong>Nome:</strong> ${filme}
+                </div>
+
+                <div class="informacao">
+                    <strong>Ano de lançamento:</strong> ${ano}
+                </div>
+
+                <div class="informacao">
+                    <strong>Sua nota:</strong> ${nota}/10
+                </div>
+
+                <div class="informacao">
+                    <strong>Idade do filme:</strong> ${idade} anos
+                </div>
+
+                <div class="mensagem-final">
+                    ${mensagem}
+                </div>
+
+            `;
+
+        });
+
+        // LIMPAR RESULTADO AO RESETAR
+
+        formulario.addEventListener("reset", function() {
+
+            document.getElementById("resultado").style.display = "none";
+
+        });
+
+    </script>
+
+</body>
+
+</html>
